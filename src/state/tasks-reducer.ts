@@ -1,7 +1,7 @@
 import { TaskType } from '../Todolist';
 import { v1 } from 'uuid';
-import { AddTodolistActionType, RemoveTodolistActionType } from './todolists-reducer';
-import { TasksStateType } from '../App';
+import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistType} from './todolists-reducer';
+import {TasksStateType, TodolistType} from '../App';
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK',
@@ -33,7 +33,8 @@ type ActionsType = RemoveTaskActionType | AddTaskActionType
     | ChangeTaskStatusActionType
     | ChangeTaskTitleActionType
     | AddTodolistActionType
-    | RemoveTodolistActionType
+    | RemoveTodolistActionType | SetTodolistType
+
 
 const initialState: TasksStateType = {}
 
@@ -86,10 +87,24 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             delete copyState[action.id];
             return copyState;
         }
+        case 'SET_TODOS': {
+            const copyState = {...state}
+            action.todos.forEach((tl)=>{
+                copyState[tl.id]=[]
+            })
+        }
+        case'SET-TASKS':{
+            return {
+                ...state,
+                [action.todolistId]:action.task
+            }
+        }
         default:
             return state;
     }
 }
+
+
 
 export const removeTaskAC = (taskId: string, todolistId: string): RemoveTaskActionType => {
     return {type: 'REMOVE-TASK', taskId: taskId, todolistId: todolistId}
@@ -103,4 +118,11 @@ export const changeTaskStatusAC = (taskId: string, isDone: boolean, todolistId: 
 export const changeTaskTitleAC = (taskId: string, title: string, todolistId: string): ChangeTaskTitleActionType => {
     return {type: 'CHANGE-TASK-TITLE', title, todolistId, taskId}
 }
+export const setTaskAC = ( todolistId: string, task:TaskType[]): SetTodolistType => {
+    return {type: 'SET-TASKS',  todolistId,task } as const
+}
+export const setTaskTC = ( todolistId: string, task:TaskType[]): SetTodolistType => {
+    return {type: 'SET_TODOS',  todolistId,task } as const
+}
+
 
