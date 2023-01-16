@@ -24,7 +24,7 @@ export type GetTasksResponse = {
     items: TasksType[]
 }
 
-export type UpdateTaskType = {
+export type UpdateTaskModelType ={
     description: string
     title: string
     status: number
@@ -40,11 +40,11 @@ export const tasksApi = {
     deleteTask(todolistId: string, taskId: string) {
         return instans.delete<ResponseType>(`todo-lists/${todolistId}/tasks${taskId}`)
     },
-    putTasks(todolistId: string) {
-        return instans.get<UpdateTaskType>(`todo-lists/${todolistId}/tasks`)
+    putTasks(todolistId: string, taskTitle:string, model: UpdateTaskModelType) {
+        return instans.put<ResponseType>(`todo-lists/${todolistId}/tasks`,model)
     },
-    postTask(todolistId: string, taskId: string) {
-        return instans.delete<ResponseType>(`todo-lists/${todolistId}/tasks${taskId}`)
+    postTask(todolistId: string, taskId: string, ) {
+        return instans.post<ResponseType<TasksType>>(`todo-lists/${todolistId}/tasks${taskId}`,{title:'ooollllololol'})
     },
 }
 

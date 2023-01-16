@@ -6,7 +6,8 @@ export default {
 }
 export const GetTask = () => {
     const [state, setState] = useState<any>(null)
-    const [todolistIdGet, setTodolistIdGet] = useState<any>(null)
+    const [taskTitle, SetTaskTitle] = useState<string>('')
+    const [todolistIdGet, setTodolistIdGet] = useState<string>('')
     const getTask = () => {
         const todolistId = '62a788fb-84e8-43be-af57-16334fb7e8d7'
         tasksApi.getTasks(todolistId)
@@ -18,15 +19,17 @@ export const GetTask = () => {
         {JSON.stringify(state)}
         <div>
 
-            <input placeholder={'todolistId'} value={todolistIdGet} onChange={(e)=>{setTodolistIdGet(e.currentTarget.value)}} />
-        <button onClick={getTask}> getTask</button>
+            <input placeholder={'todolistId'} value={todolistIdGet} onChange={(e) => {
+                setTodolistIdGet(e.currentTarget.value)
+            }}/>
+            <button onClick={getTask}> getTask</button>
         </div>
     </div>
 }
 export const DeleteTask = () => {
     const [state, setState] = useState<any>(null)
-    const [taskId, setTaskId] = useState<any>(null)
-    const [todolistId, setTodolistId] = useState<any>(null)
+    const [taskId, setTaskId] = useState<string>('')
+    const [todolistId, setTodolistId] = useState<string>('')
     const deleteTask = () => {
         const todolistId = '62a788fb-84e8-43be-af57-16334fb7e8d7'
         const taskId = ''
@@ -54,10 +57,25 @@ export const DeleteTask = () => {
 }
 export const PutTask = () => {
     const [state, setState] = useState<any>(null)
+    const [taskTitle, setTaskTitle] = useState<string>('title 1')
+    const [taskDescription, setTaskDescription] = useState<string>('description 1')
+    const [status, setStatus] = useState<number>(0)
+    const [priority, setPriority] = useState<number>(0)
+    const [startDate, setStartDate] = useState<string>('')
+    const [deadline, setDeadline] = useState<string>('')
+
     const [todolistIdPut, setTodolistIdPut] = useState<any>(null)
+    const [taskId, setTaskId] = useState<string>('')
+
     const putTask = () => {
-        const todolistId = 'e495ee6b-eea3-4d20-8f95-a45d6d718996'
-        tasksApi.putTasks(todolistId)
+        tasksApi.putTasks(todolistIdPut, taskTitle, {
+            deadline: '',
+            description: description,
+            priority: priority,
+            startDate: '',
+            status: status,
+            title:title
+        })
             .then((res) => {
                 setState(res.data)
             })
@@ -65,15 +83,38 @@ export const PutTask = () => {
     return <div>
         {JSON.stringify(state)}
         <div>
-            <input placeholder={'todolistId'} value={todolistIdPut} onChange={(e)=>{setTodolistIdPut(e.currentTarget.value)}}/>
+            <input placeholder={'todolistId'} value={todolistIdPut} onChange={(e) => {
+                setTodolistIdPut(e.currentTarget.value)
+            }}/>
+            <input placeholder={'Title'} value={taskTitle} onChange={(e) => {
+                setTaskTitle(e.currentTarget.value)
+            }}/>
+            <input placeholder={'Description'} value={taskDescription} onChange={(e) => {
+                setTaskDescription(e.currentTarget.value)
+            }}/>
+            <input placeholder={'Status'} value={status} onChange={(e) => {
+                setStatus(+e.currentTarget.value)
+            }}/>
+            <input placeholder={'Priority'} value={priority} onChange={(e) => {
+                setPriority(+e.currentTarget.value)
+            }}/>
+            <input placeholder={'taskId'} value={taskId} onChange={(e) => {
+                setTaskId(e.currentTarget.value)
+            }}/>
+            <input placeholder={'startDate'} value={startDate} onChange={(e) => {
+                setStartDate(e.currentTarget.value)
+            }}/>
+            <input placeholder={'deadline'} value={deadline} onChange={(e) => {
+                setDeadline(e.currentTarget.value)
+            }}/>
             <button onClick={putTask}> Put</button>
         </div>
     </div>
 }
 export const PostTask = () => {
     const [state, setState] = useState<any>(null)
-    const [todolistIdPost, setTodolistIdPost] = useState<any>(null)
-    const [taskIdPost, setTaskIdPost] = useState<any>(null)
+    const [todolistIdPost, setTodolistIdPost] = useState<string>('')
+    const [taskIdPost, setTaskIdPost] = useState<string>('')
     const postTask = () => {
         const todolistId = '62a788fb-84e8-43be-af57-16334fb7e8d7'
         const taskId = ''

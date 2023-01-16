@@ -39,7 +39,7 @@ export type GetTasksResponse = {
     items: TasksType[]
 }
 
-export type UpdateTaskType={
+export type UpdateTaskModelType ={
     description: string
     title: string
     status: number
