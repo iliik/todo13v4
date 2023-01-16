@@ -9,7 +9,6 @@ export const GetTask = () => {
     const [taskTitle, SetTaskTitle] = useState<string>('')
     const [todolistIdGet, setTodolistIdGet] = useState<string>('')
     const getTask = () => {
-        const todolistId = '62a788fb-84e8-43be-af57-16334fb7e8d7'
         tasksApi.getTasks(todolistId)
             .then((res) => {
                 setState(res.data)
@@ -31,8 +30,6 @@ export const DeleteTask = () => {
     const [taskId, setTaskId] = useState<string>('')
     const [todolistId, setTodolistId] = useState<string>('')
     const deleteTask = () => {
-        const todolistId = '62a788fb-84e8-43be-af57-16334fb7e8d7'
-        const taskId = ''
         tasksApi.deleteTask(todolistId, taskId)
             .then((res) => {
                 setState(res.data)
@@ -70,11 +67,11 @@ export const PutTask = () => {
     const putTask = () => {
         tasksApi.putTasks(todolistIdPut, taskTitle, {
             deadline: '',
-            description: description,
+            description: description ,
             priority: priority,
             startDate: '',
             status: status,
-            title:title
+            title:title,
         })
             .then((res) => {
                 setState(res.data)
