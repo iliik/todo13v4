@@ -23,13 +23,18 @@ export type ChangeTodolistFilterActionType = {
     id: string
     filter: FilterValuesType
 }
+// export type SetTodolistType = ReturnType<typeof setTodosAC>
+
+export type SetTodolistType ={
+    type:'SET_TODOLIST',
+    todolists:TodolistType[]
+}
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
 export type TodolistDomainType = TodolistType & {
     filter:FilterValuesType
 }
-export type SetTodolistType = ReturnType<typeof setTodosAC>
 
 type ActionsType = RemoveTodolistActionType
     | AddTodolistActionType
@@ -70,8 +75,8 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
             return [...state]
         }
 
-        case 'SET_TODOS' : {
-            return action.todos.map((el) => ({...el, filter: 'all'}))
+        case 'SET_TODOLIST' : {
+            return action.todolists.map((tl) => ({...tl, filter: 'all'}))
         }
 
         default:
@@ -83,9 +88,7 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
 
 
 
-export const setTodosAC = (todos: TodolistType[]) => {
-    return {type: 'SET_TODOS', todos} as const
-}
+
 export const removeTodolistAC = (todolistId: string): RemoveTodolistActionType => {
     return {type: 'REMOVE-TODOLIST', id: todolistId}
 }
@@ -98,10 +101,12 @@ export const changeTodolistTitleAC = (id: string, title: string): ChangeTodolist
 export const changeTodolistFilterAC = (id: string, filter: FilterValuesType): ChangeTodolistFilterActionType => {
     return {type: 'CHANGE-TODOLIST-FILTER', id: id, filter: filter}
 }
-export const fecthTodosTC = ()=> (dispatch:Dispatch, getState:()=>AppRootStateType) =>{
+export const fecthTodosTCThunk = ()=> (dispatch:Dispatch, getState:()=>AppRootStateType) =>{
     todolistAPI.getTodolist()
         .then((res)=>{
-            dispatch(setTodosAC(res.data))
+            dispatch(setTodolistsAC(res.data))
         })
 }
-
+export const setTodolistsAC = (todolists: TodolistType[]): SetTodolistType => {
+    return {type: 'SET_TODOLIST', todolists:todolists} as const
+}

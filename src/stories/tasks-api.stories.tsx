@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {tasksApi} from "../api/tasks-api";
 
 export default {

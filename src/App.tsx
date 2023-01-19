@@ -15,12 +15,12 @@ import {
     addTodolistAC,
     changeTodolistFilterAC,
     changeTodolistTitleAC,
-    fecthTodosTC,
+    fecthTodosTCThunk,
     FilterValuesType,
     removeTodolistAC,
     TodolistDomainType
 } from './state/todolists-reducer';
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from './state/tasks-reducer';
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, fecthTaskTCThunk, removeTaskAC} from './state/tasks-reducer';
 import {useSelector} from 'react-redux';
 import {appDispatch, AppRootStateType} from './state/store';
 import {TasksType} from "./api/tasks-api";
@@ -79,8 +79,13 @@ function App() {
 
 
     useEffect(() => {
-        dispatch(fecthTodosTC())
+        dispatch(fecthTodosTCThunk())
     }, [])
+
+    useEffect(() => {
+        dispatch(fecthTaskTCThunk(props.id))
+    }, [])
+
 
     return (
         <div className="App">
